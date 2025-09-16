@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import smoozmy.drive2.pages.LoginPage;
 import smoozmy.drive2.utils.Config;
 
 import java.time.Duration;
@@ -25,12 +26,16 @@ public abstract class BaseTest {
         baseUrl = Config.get("base.url");
         username = Config.get("username");
         password = Config.get("password");
-
-        driver.get(baseUrl);
     }
 
     @AfterEach
     public void tearDown() {
         driver.quit();
+    }
+
+    protected void loginAsDefaultUser() {
+        LoginPage loginPage = new LoginPage(driver, baseUrl);
+        loginPage.open();
+        loginPage.login(username, password);
     }
 }
